@@ -5,9 +5,9 @@ import {
   FaAngleLeft,
   FaAngleRight,
   FaAngleDoubleRight,
-  FaEye
 } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
+import User from './user';
 
 const USERS_PER_PAGE = 10;
 
@@ -122,15 +122,7 @@ const Users = () => {
             ) : (
               users.map((user) => (
                 <tr key={user?.email} className="border-b hover:bg-gray-50">
-                  <td className="px-6 py-4">{user.firstName} {user.lastName}</td>
-                  <td className="px-6 py-4">{user.email}</td>
-                  <td className="px-6 py-4">{user.age}</td>
-                  <td className="px-6 py-4">{user?.birthDate}</td>
-                  <td className="px-6 py-4">
-                    <button onClick={() => showDetails(user)}>
-                      <FaEye />
-                    </button>
-                  </td>
+                  <User user={user} showDetails={showDetails} />
                 </tr>
               ))
             )}
