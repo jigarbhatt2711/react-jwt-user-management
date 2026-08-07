@@ -11,8 +11,11 @@ import {
   FaSignInAlt,
   FaReact,
 } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/slices/authSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -50,14 +53,16 @@ const Login = () => {
         sameSite: "Strict",
       });
 
-      localStorage.setItem("user", JSON.stringify({
-        username: response.data.username,
-        email: response.data.email,
-        firstname: response.data.firstname,
-        lastname: response.data.lastname,
-        gender: response.data.gender,
-        profile_image: response.data.image,
-      }));
+      dispatch(
+        setUser({
+          username: response.data.username,
+          email: response.data.email,
+          firstname: response.data.firstname,
+          lastname: response.data.lastname,
+          gender: response.data.gender,
+          profile_image: response.data.image,
+        })
+      );
 
       // localStorage.setItem("accessToken", response.data.accessToken);
       // localStorage.setItem("refreshToken", response.data.refreshToken);
