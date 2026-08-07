@@ -5,45 +5,47 @@ import {
   FaAngleLeft,
   FaAngleRight,
   FaAngleDoubleRight,
+  FaEye
 } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 
 const USERS_PER_PAGE = 10;
 
 const Users = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalUsers, setTotalUsers] = useState(0);
 
   const totalPages = Math.ceil(totalUsers / USERS_PER_PAGE);
+  const [user, setUser] = useState(0);
 
-    const [user, setUser] = useState(0);
-
-  const handleLogin = () => {
-    setUser(prev => prev +  1);
-
-    console.log(user);
+  const showDetails = (user) => {
+    navigate("/dashboard", {
+      state: user,
+    });
   };
 
 
-//   const handleLogin = () => {
-//   const newUser = { name: "Jigar" };
-//   setUser(newUser);
-//   console.log(newUser); // logs { name: "Jigar" } immediately — but this is just a local variable, not "user" from state
-// };
+  //   const handleLogin = () => {
+  //   const newUser = { name: "Jigar" };
+  //   setUser(newUser);
+  //   console.log(newUser); // logs { name: "Jigar" } immediately — but this is just a local variable, not "user" from state
+  // };
 
 
-    useEffect(() => {
-        // handleLogin();
+  useEffect(() => {
+    // handleLogin();
     // console.log("component mount1:");
     // return () => {
     //   console.log("component unmount:");
     // }
-    }, [currentPage]);
+  }, [currentPage]);
 
   useEffect(() => {
     const fetchUsers = async () => {
-        // console.log("fetch users called");
+      // console.log("fetch users called");
       setLoading(true);
       try {
         const skip = (currentPage - 1) * USERS_PER_PAGE;
@@ -96,9 +98,6 @@ const Users = () => {
   return (
     <div>
       <div className="overflow-x-auto">
-         <button onClick={handleLogin}>
-      Login
-    </button>
         <table className="w-full">
           <thead className="bg-gray-100">
             <tr>
@@ -125,6 +124,9 @@ const Users = () => {
                   <td className="px-6 py-4">
                     <div className="h-4 bg-gray-200 rounded w-24"></div>
                   </td>
+                  <td className="px-6 py-4">
+                    <div className="h-4 bg-gray-200 rounded w-10"></div>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -134,6 +136,11 @@ const Users = () => {
                   <td className="px-6 py-4">{user.email}</td>
                   <td className="px-6 py-4">{user.age}</td>
                   <td className="px-6 py-4">{user?.birthDate}</td>
+                  <td className="px-6 py-4">
+                    <button onClick={() => showDetails(user)}>
+                      <FaEye />
+                    </button>
+                  </td>
                 </tr>
               ))
             )}
@@ -176,11 +183,10 @@ const Users = () => {
                 <button
                   key={page}
                   onClick={() => goToPage(page)}
-                  className={`px-3 py-2 border rounded ${
-                    page === currentPage
-                      ? "bg-blue-600 text-white border-blue-600"
-                      : "hover:bg-gray-100"
-                  }`}
+                  className={`px-3 py-2 border rounded ${page === currentPage
+                    ? "bg-blue-600 text-white border-blue-600"
+                    : "hover:bg-gray-100"
+                    }`}
                 >
                   {page}
                 </button>
