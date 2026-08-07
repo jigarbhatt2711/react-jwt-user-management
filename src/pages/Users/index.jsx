@@ -18,34 +18,24 @@ const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalUsers, setTotalUsers] = useState(0);
 
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const totalPages = Math.ceil(totalUsers / USERS_PER_PAGE);
   const [user, setUser] = useState(0);
 
   const showDetails = (user) => {
-    navigate("/dashboard", {
-      state: user,
-    });
+    setSelectedUser(user);
+    setIsModalOpen(true);
   };
 
-
-  //   const handleLogin = () => {
-  //   const newUser = { name: "Jigar" };
-  //   setUser(newUser);
-  //   console.log(newUser); // logs { name: "Jigar" } immediately — but this is just a local variable, not "user" from state
-  // };
-
-
-  useEffect(() => {
-    // handleLogin();
-    // console.log("component mount1:");
-    // return () => {
-    //   console.log("component unmount:");
-    // }
-  }, [currentPage]);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedUser(null);
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
-      // console.log("fetch users called");
       setLoading(true);
       try {
         const skip = (currentPage - 1) * USERS_PER_PAGE;
@@ -210,6 +200,107 @@ const Users = () => {
             >
               <FaAngleDoubleRight size={14} />
             </button>
+          </div>
+        </div>
+      )}
+      {/* User detail popup */}
+      {isModalOpen && selectedUser && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6 relative">
+
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-gray-500 hover:text-black text-xl"
+            >
+              ×
+            </button>
+
+            <div className="flex items-center gap-5 border-b pb-5">
+              <img
+                src={selectedUser.image}
+                alt={selectedUser.firstName}
+                className="w-24 h-24 rounded-full border"
+              />
+
+              <div>
+                <h2 className="text-2xl font-bold">
+                  {selectedUser.firstName} {selectedUser.lastName}
+                </h2>
+
+                <p className="text-gray-500">{selectedUser.email}</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mt-6">
+
+              <div>
+                <p className="text-gray-500 text-sm">Age</p>
+                <p className="font-semibold">{selectedUser.age}</p>
+              </div>
+
+              <div>
+                <p className="text-gray-500 text-sm">Gender</p>
+                <p className="font-semibold">{selectedUser.gender}</p>
+              </div>
+
+              <div>
+                <p className="text-gray-500 text-sm">Phone</p>
+                <p className="font-semibold">{selectedUser.phone}</p>
+              </div>
+
+              <div>
+                <p className="text-gray-500 text-sm">Birth Date</p>
+                <p className="font-semibold">{selectedUser.birthDate}</p>
+              </div>
+
+              <div>
+                <p className="text-gray-500 text-sm">Username</p>
+                <p className="font-semibold">{selectedUser.username}</p>
+              </div>
+
+              <div>
+                <p className="text-gray-500 text-sm">Blood Group</p>
+                <p className="font-semibold">{selectedUser.bloodGroup}</p>
+              </div>
+
+              <div className="col-span-2">
+                <p className="text-gray-500 text-sm">Address</p>
+                <p className="font-semibold">
+                  {selectedUser.address?.address},
+                  {" "}
+                  {selectedUser.address?.city},
+                  {" "}
+                  {selectedUser.address?.state},
+                  {" "}
+                  {selectedUser.address?.country}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-gray-500 text-sm">Company</p>
+                <p className="font-semibold">
+                  {selectedUser.company?.name}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-gray-500 text-sm">Department</p>
+                <p className="font-semibold">
+                  {selectedUser.company?.department}
+                </p>
+              </div>
+
+            </div>
+
+            <div className="flex justify-end mt-8">
+              <button
+                onClick={closeModal}
+                className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700"
+              >
+                Close
+              </button>
+            </div>
+
           </div>
         </div>
       )}
