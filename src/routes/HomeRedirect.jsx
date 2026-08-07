@@ -1,9 +1,7 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-
 
 export default function HomeRedirect() {
-  const user = useSelector((state) => state.auth.user);
+  const user = localStorage.getItem("user");
 
   return user ? (
     <Navigate to="/dashboard" replace />

@@ -34,8 +34,6 @@ const Login = () => {
         },
       });
 
-      console.log("Login Response*******:", response);
-
       if (response.status !== 200) {
         toast.error("Login failed. Please check your credentials.");
         return;
@@ -43,26 +41,29 @@ const Login = () => {
 
       Cookies.set("accessToken", response.data.accessToken, {
         expires: 1,
-        secure: true,
+        secure: false,
         sameSite: "Strict",
       });
 
       Cookies.set("refreshToken", response.data.refreshToken, {
         expires: 7,
-        secure: true,
+        secure: false,
         sameSite: "Strict",
       });
 
-      dispatch(
-        setUser({
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
           username: response.data.username,
           email: response.data.email,
-          firstname: response.data.firstname,
-          lastname: response.data.lastname,
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
           gender: response.data.gender,
           profile_image: response.data.image,
         })
       );
+
 
       // localStorage.setItem("accessToken", response.data.accessToken);
       // localStorage.setItem("refreshToken", response.data.refreshToken);

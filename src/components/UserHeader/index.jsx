@@ -9,18 +9,12 @@ import {
   FaSearch,
   FaSignOutAlt,
 } from "react-icons/fa";
-import { useSelector } from "react-redux";
-
 const UserHeader = () => {
-  const userData = useSelector((state) => state.auth.user);
-  const [user, setUser] = useState(userData);
-
-  // useEffect(() => {
-  //   const userData = localStorage.getItem("user");
-  //   // console.log("before:", typeof userData);
-  //   setUser(JSON.parse(userData));
-  //   // console.log("after", typeof user);
-  // }, []);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    setUser(JSON.parse(userData));
+  }, []);
 
   return (
     <header className="bg-white shadow px-8 py-4 flex justify-between items-center">

@@ -15,9 +15,9 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     navigate("/");
-    localStorage.removeItem("user");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    // localStorage.removeItem("user");
+    // localStorage.removeItem("accessToken");
+    // localStorage.removeItem("refreshToken");
   };
 
   const NavItem = ({ to, icon, label }) => (
