@@ -10,22 +10,25 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { useNavigate, NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
+import Cookies from "js-cookie";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleLogout = () => {
+    dispatch(logout());
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
     navigate("/");
-    // localStorage.removeItem("user");
-    // localStorage.removeItem("accessToken");
-    // localStorage.removeItem("refreshToken");
   };
 
   const NavItem = ({ to, icon, label }) => (
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center gap-3 px-6 py-4 ${
-          isActive ? "bg-blue-600 hover:bg-blue-700" : "hover:bg-slate-800"
+        `flex items-center gap-3 px-6 py-4 ${isActive ? "bg-blue-600 hover:bg-blue-700" : "hover:bg-slate-800"
         }`
       }
     >

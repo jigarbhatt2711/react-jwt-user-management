@@ -1,20 +1,8 @@
-import { useEffect, useState } from "react";
-import {
-  FaReact,
-  FaHome,
-  FaUser,
-  FaChartBar,
-  FaCog,
-  FaBell,
-  FaSearch,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import { FaBell, FaSearch } from "react-icons/fa";
+import { useSelector } from "react-redux";
+
 const UserHeader = () => {
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    const userData = localStorage.getItem("user");
-    setUser(JSON.parse(userData));
-  }, []);
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <header className="bg-white shadow px-8 py-4 flex justify-between items-center">
@@ -38,19 +26,23 @@ const UserHeader = () => {
 
         <div className="flex items-center gap-3">
           <img
-            src={user?.profile_image || "https://i.pravatar.cc/100"}
+            src={user?.image || "https://i.pravatar.cc/100"}
             alt="Profile"
             className="w-10 h-10 rounded-full"
           />
 
           <div>
-            <h3 className="font-semibold">{user?.email}</h3>
-            <p className="text-sm text-gray-500">Administrator</p>
+            <h3 className="font-semibold">
+              {user?.firstName} {user?.lastName}
+            </h3>
+            <p className="text-sm text-gray-500">
+              {user?.email}
+            </p>
           </div>
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default UserHeader
+export default UserHeader;

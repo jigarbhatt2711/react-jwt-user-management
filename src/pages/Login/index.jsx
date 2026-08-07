@@ -41,29 +41,26 @@ const Login = () => {
 
       Cookies.set("accessToken", response.data.accessToken, {
         expires: 1,
-        secure: false,
+        secure: true,
         sameSite: "Strict",
       });
 
       Cookies.set("refreshToken", response.data.refreshToken, {
         expires: 7,
-        secure: false,
+        secure: true,
         sameSite: "Strict",
       });
-
-
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
+      
+      dispatch(
+        setUser({
           username: response.data.username,
           email: response.data.email,
           firstName: response.data.firstName,
           lastName: response.data.lastName,
           gender: response.data.gender,
-          profile_image: response.data.image,
+          image: response.data.image,
         })
       );
-
 
       // localStorage.setItem("accessToken", response.data.accessToken);
       // localStorage.setItem("refreshToken", response.data.refreshToken);
