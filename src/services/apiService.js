@@ -1,5 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { store } from "../redux/store";
+import { logout } from "../redux/slices/authSlice";
 
 const api = axios.create({
   baseURL: "https://dummyjson.com",
@@ -20,6 +22,32 @@ api.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+
+// Response Interceptor
+api.interceptors.response.use(
+  (response) => response,
+
+  (error) => {
+    if (error.response?.status === 401) {
+      console.log("401 Unauthorized - Logging out...");
+
+      // Remove authentication cookies
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+
+      // Remove stored user
+      localStorage.removeItem("user");
+
+      // Clear Redux authentication state
+      store.dispatch(logout());
+
+      // Redirect to login
+      window.location.href = "/login";
+    }
+
+    return Promise.reject(error);
+  }
 );
 
 export const apiService = async ({
@@ -67,9 +95,7 @@ export const apiService = async ({
       message: "Success",
       data: response.data,
     };
-
   } catch (error) {
-
     if (error.response) {
       const { status, data } = error.response;
 
@@ -95,6 +121,9 @@ export const apiService = async ({
         case 500:
           message = data?.message || "Internal Server Error";
           break;
+
+        default:
+          message = data?.message || "Something went wrong";
       }
 
       return {
