@@ -36,19 +36,13 @@ const Footer = () => {
               </li>
 
               <li>
-                <Link to="/about" className="hover:text-white">
+                <Link to="/about_us" className="hover:text-white">
                   About
                 </Link>
               </li>
 
               <li>
-                <Link to="/dashboard" className="hover:text-white">
-                  Dashboard
-                </Link>
-              </li>
-
-              <li>
-                <Link to="/terms" className="hover:text-white">
+                <Link to="/tc" className="hover:text-white">
                   Terms
                 </Link>
               </li>
@@ -99,31 +93,6 @@ const Footer = () => {
           </div>
 
         </div>
-
-        <hr className="my-8 border-gray-700" />
-
-        <div className="flex flex-col md:flex-row justify-between items-center text-sm">
-
-          <p>
-            © 2026 My React App. All Rights Reserved.
-          </p>
-
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <Link to="/privacy" className="hover:text-white">
-              Privacy Policy
-            </Link>
-
-            <Link to="/terms" className="hover:text-white">
-              Terms & Conditions
-            </Link>
-
-            <Link to="/contact" className="hover:text-white">
-              Contact Us
-            </Link>
-          </div>
-
-        </div>
-
       </div>
     </footer>
   );

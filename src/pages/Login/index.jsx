@@ -170,19 +170,6 @@ const Login = () => {
             Register
           </a>
         </p>
-
-        <p className="text-center text-gray-500 text-sm mt-8">
-          <Link to="/about_us" className="text-blue-600 font-medium hover:underline">
-            About US
-          </Link>
-        </p>
-
-
-        <p className="text-center text-gray-500 text-sm mt-8">
-          <Link to="/tc" className="text-blue-600 font-medium hover:underline">
-            Terms and Conditions
-          </Link>
-        </p>
       </div>
     </div>
   );

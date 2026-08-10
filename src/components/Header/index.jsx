@@ -21,26 +21,14 @@ const Header = () => {
             </li>
 
             <li>
-              <Link to="/about" className="hover:text-yellow-300 transition">
+              <Link to="/about_us" className="hover:text-yellow-300 transition">
                 About
               </Link>
             </li>
 
             <li>
-              <Link to="/dashboard" className="hover:text-yellow-300 transition">
-                Dashboard
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/terms" className="hover:text-yellow-300 transition">
+              <Link to="/tc" className="hover:text-yellow-300 transition">
                 Terms
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/contact" className="hover:text-yellow-300 transition">
-                Contact
               </Link>
             </li>
           </ul>
